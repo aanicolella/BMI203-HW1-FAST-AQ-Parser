@@ -3,26 +3,38 @@ from seqparser import (
         FastqParser,
         transcribe,
         reverse_transcribe)
+import io
 
 def main():
     """
     The main function
     """
     # Create instance of FastaParser
+    fasta = FastaParser(filename="data/test.fa")
     # Create instance of FastqParser
-        
+    fastq = FastqParser("data/test.fq")
     # For each record of FastaParser, Transcribe the sequence
     # and print it to console
-       
+    for record in fasta:
+        print(record[0])
+        print(transcribe(record[1], reverse=False))
     # For each record of FastqParser, Transcribe the sequence
     # and print it to console
-
+    for record in fastq:
+        print(record[0])
+        print(transcribe(record[1],reverse=False))
 
     # For each record of FastaParser, Reverse Transcribe the sequence
     # and print it to console
-       
+    for record in fasta:
+        print(record[0])
+        print(transcribe(record[1], reverse=True))
+
     # For each record of FastqParser, Reverse Transcribe the sequence
     # and print it to console
+    for record in fastq:
+        print(record[0])
+        print(transcribe(record[1],reverse=True))
 
 
 """
