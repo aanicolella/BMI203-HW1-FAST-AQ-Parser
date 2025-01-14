@@ -35,7 +35,6 @@ def main():
     for record in fastq:
         print(record[0])
         print(transcribe(record[1],reverse=True))
-
 """
 When executing a python script from the command line there will
 always be a hidden variable `__name__` set to the value `__main__`.

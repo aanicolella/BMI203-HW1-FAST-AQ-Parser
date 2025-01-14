@@ -38,9 +38,21 @@ def test_FastaParser_goodFile():
     for record in testFasta:
         numSeq+=1 # incriment counter for num seq test
         # Check that values are assigned to both record slots based on expected formating:
-        assert record[0].startswith("seq") and record[1].startswith(tuple(["A","T","C","G"]))
+        assert record[0].startswith("seq") and all(x in 'ATCG' for x in record[1])
     # Check that number of records is the same as expected
     assert numSeq==100
+
+    # check that blank file raises ValueError
+    with pytest.raises(ValueError):
+        blank = FastaParser('tests/blank.fa')
+        for record in blank:
+            pass
+
+    # Check that bad file raises ValueError
+    with pytest.raises(ValueError):
+        bad = FastaParser('tests/bad.fa')
+        for record in bad:
+            pass
 
 def test_FastaFormat():
     """
@@ -70,7 +82,7 @@ def test_FastqParser_goodFile():
     for record in testFastq:
         numSeq+=1 # incriment counter for num seq test
         # Check that values are assigned to both record slots based on expected formating:
-        assert record[0].startswith("seq") and record[1].startswith(tuple(["A","T","C","G"])) and record[2]!=None
+        assert record[0].startswith("seq") and all(x in 'ATCG' for x in record[1]) and record[2]!=None
     # Check that number of records is the same as expected
     assert numSeq==100
 

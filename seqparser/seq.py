@@ -10,13 +10,15 @@ def transcribe(seq: str, reverse: bool = False) -> str:
     Write a function that will transcribe (replace DNA sequence to RNA
     by replacing all 'T' to 'U') in an input sequence
     """
-    # if reverse transcription, feed transcribed seq to reverse_transcribe()
-    if reverse == True:
-        return reverse_transcribe(''.join(map(lambda x: TRANSCRIPTION_MAPPING.get(x, x), seq)))
-    # else, return mapping from DNA to RNA
+    if all(x in 'ATCG' for x in seq):
+        # if reverse transcription, feed transcribed seq to reverse_transcribe()
+        if reverse:
+            return reverse_transcribe(''.join(map(lambda x: TRANSCRIPTION_MAPPING.get(x, x), seq)))
+        # else, return mapping from DNA to RNA
+        else:
+            return ''.join(map(lambda x: TRANSCRIPTION_MAPPING.get(x, x), seq))
     else:
-        return ''.join(map(lambda x: TRANSCRIPTION_MAPPING.get(x, x), seq))
-    pass
+        raise ValueError('Sequence includes invalid nucelotides.')
 
 def reverse_transcribe(seq: str) -> str:
     """
@@ -24,4 +26,3 @@ def reverse_transcribe(seq: str) -> str:
     the sequence
     """
     return seq[::-1]
-    pass
